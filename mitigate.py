@@ -5,9 +5,9 @@ def mitigation_layer(
     probs,
     confidence,
     benign_label,
-    entropy_threshold=1.3, #fewer interventions
+    entropy_threshold=1.0, #fewer interventions
     confidence_threshold=0.35, #more conservative intervention
-    alpha=0.25  # strength of minority bias, decrease for less agressive attack bias
+    alpha=0.4  # strength of minority bias, decrease for less agressive attack bias
 ):
 
     refined = preds.copy()
