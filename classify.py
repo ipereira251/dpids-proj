@@ -24,6 +24,10 @@ def predict_with_confidence(model, X):
     preds = np.argmax(probs, axis=1)
 
     sorted_probs = np.sort(probs, axis=1)
-    confidence = sorted_probs[:, -1] - sorted_probs[:, -2]
+    
+    # won't make a difference but we'll see
+    top_prob = sorted_probs[:, -1]
+    prob_two = sorted_probs[:, -2]
+    confidence = top_prob - prob_two
 
     return preds, probs, confidence
