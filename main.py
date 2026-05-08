@@ -38,10 +38,17 @@ def run_experiment(train_files, test_files, label_col, sigma=0.2):
 
     # results
     print("\n=== RESULTS ===")
-    print("Clean:\n", results_clean["report"])
-    print("Noisy:\n", results_noisy["report"])
-    print("Mitigated:\n", results_mitigated["report"])
+    print("Clean:\n")
+    print(results_clean["report"])
+    print(results_clean["confusion_matrix"])
 
+    print("Noisy:\n")
+    print(results_clean["report"])
+    print(results_clean["confusion_matrix"])
+
+    print("Mitigated:\n")
+    print(results_clean["report"])
+    print(results_clean["confusion_matrix"])
 
 if __name__ == "__main__":
 
