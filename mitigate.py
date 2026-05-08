@@ -7,7 +7,7 @@ def mitigation_layer(
     benign_label,
     entropy_threshold=0.9, #fewer interventions
     confidence_threshold=0.35, #more conservative intervention
-    alpha=0.5,  # strength of minority bias, decrease for less agressive attack bias
+    alpha=1.5,  # strength of minority bias, decrease for less agressive attack bias
     debug=True
 ):
 
@@ -43,7 +43,7 @@ def mitigation_layer(
         old_pred = preds[i]
 
         # weighted probability adjustment 
-        adjusted = probs[i] ** 0.7 #(1 + alpha * class_weights)
+        adjusted = probs[i] ** 0.6 #(1 + alpha * class_weights)
 
         # normalize back to probability distribution
         adjusted = adjusted * (1 + alpha * class_weights)
