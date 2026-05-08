@@ -5,9 +5,10 @@ def mitigation_layer(
     probs,
     confidence,
     benign_label,
-    entropy_threshold=1.0, #fewer interventions
+    entropy_threshold=0.9, #fewer interventions
     confidence_threshold=0.35, #more conservative intervention
-    alpha=0.4  # strength of minority bias, decrease for less agressive attack bias
+    alpha=0.5,  # strength of minority bias, decrease for less agressive attack bias
+    debug=True
 ):
 
     refined = preds.copy()
@@ -23,6 +24,9 @@ def mitigation_layer(
     class_weights = (1.0 / class_counts)
     class_weights = class_weights / np.max(class_weights)
 
+    trigger_count = 0
+    changed_preds = 0
+    
     for i in range(len(preds)):
 
         uncertain = (
@@ -33,16 +37,34 @@ def mitigation_layer(
         if not uncertain:
             continue
 
+        trigger_count += 1
+
+
+        old_pred = preds[i]
+
         # weighted probability adjustment 
-        adjusted = probs[i] * (1 + alpha * class_weights)
+        adjusted = probs[i] ** 0.7 #(1 + alpha * class_weights)
 
         # normalize back to probability distribution
+        adjusted = adjusted * (1 + alpha * class_weights)
+        
         adjusted = adjusted / (np.sum(adjusted) + eps)
 
-        refined[i] = np.argmax(adjusted)
+        new_pred = np.argmax(adjusted)
 
         # benign safety constraint
-        if refined[i] != benign_label and probs[i][benign_label] > 0.6:
-            refined[i] = benign_label
+        if new_pred != benign_label and probs[i][benign_label] > 0.75:
+            new_pred = benign_label
+
+        refined[i] = new_pred
+
+        if new_pred != old_pred:
+            changed_preds += 1
+
+        if debug:
+            print("mitigation debug")
+            print("mitigations triggered", trigger_count)
+            print("preds changed", changed_preds)
+            print("\n")
 
     return refined
