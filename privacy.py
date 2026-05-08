@@ -9,6 +9,6 @@ def add_gaussian_noise(X, sigma=0.1):
         sigma,
         X.shape
     )
-    weighted_noise = noise * weights
+    weighted_noise = noise * feature_std
 
     return X + weighted_noise
