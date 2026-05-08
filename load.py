@@ -56,6 +56,14 @@ def load_dataset(train_files, test_files, label_col):
     X = X[valid]
     labels = labels[valid]
 
+    counts = labels.value_counts()
+
+    valid_classes = counts[counts >= 50].index
+    mask = labels.isin(valid_classes)
+
+    X = X[mask]
+    labels = labels[mask]
+
     # 80/20 split
     X_train, X_test, y_train, y_test = train_test_split(
         X,
