@@ -6,7 +6,7 @@ def mitigation_layer(
     confidence,
     benign_label,
     entropy_threshold=1.3, #fewer interventions
-    confidence_threshold=0.2, #more conservative intervention
+    confidence_threshold=0.35, #more conservative intervention
     alpha=0.25  # strength of minority bias, decrease for less agressive attack bias
 ):
 
