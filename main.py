@@ -42,13 +42,13 @@ def run_experiment(train_files, test_files, label_col, sigma=0.2):
     print(results_clean["report"])
     print(results_clean["confusion matrix"])
 
-    print("Noisy:\n")
-    print(results_clean["report"])
-    print(results_clean["confusion matrix"])
+    print("\nNoisy:\n")
+    print(results_noisy["report"])
+    print(results_noisy["confusion matrix"])
 
-    print("Mitigated:\n")
-    print(results_clean["report"])
-    print(results_clean["confusion matrix"])
+    print("\nMitigated:\n")
+    print(results_mitigated["report"])
+    print(results_mitigated["confusion matrix"])
 
 if __name__ == "__main__":
 
