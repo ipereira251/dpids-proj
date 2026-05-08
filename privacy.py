@@ -6,8 +6,9 @@ def add_gaussian_noise(X, sigma=0.1):
 
     noise = np.random.normal(
         0,
-        sigma * feature_std,
+        sigma,
         X.shape
     )
+    weighted_noise = noise * weights
 
-    return X + noise
+    return X + weighted_noise
